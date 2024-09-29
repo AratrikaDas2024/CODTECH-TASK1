@@ -1,0 +1,177 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+
+class grade
+{
+      double [] grade_list; 
+      double average;
+      char letter_grade;      
+      grade()
+     {
+           grade_list = new double[50];
+           average = 0.0;
+           letter_grade = 'I';
+     } 
+     void read_grade(int i, double score)
+     {
+          grade_list[i] = score;
+     }
+     void display(int n)
+     {
+           for(int i=0;i<n;i++)
+           {
+                  System.out.println(grade_list[i]);
+           }
+     }
+     void calculate_averageGrade(int n)
+     {
+           double sum=0.0;
+           for(int i=0;i<n;i++)
+           {
+                   sum += grade_list[i];
+           }
+           average = sum/n;
+           double average_percentage = (average/25) * 100;
+           if (average_percentage >= 90 && average_percentage <= 100)
+           {
+                    System.out.println("Your Letter Grade is: O");
+                    letter_grade = 'O';
+           }
+           else if (average_percentage >= 80&& average_percentage < 90)
+           {
+                    System.out.println("Your Letter Grade is: E");
+                    letter_grade = 'E';
+           }
+           else if (average_percentage >= 70 && average_percentage < 80)
+           {
+                    System.out.println("Your Letter Grade is: A");
+                    letter_grade = 'A';
+           }
+           else if (average_percentage >= 60&& average_percentage < 70)
+           {
+                    System.out.println("Your Letter Grade is: B");
+                    letter_grade = 'B';
+           }
+           else if (average_percentage >= 50 && average_percentage < 60)
+           {
+                    System.out.println("Your Letter Grade is: C");
+                    letter_grade = 'C';
+           }
+           else if (average_percentage >= 40 && average_percentage < 30)
+           {
+                    System.out.println("Your Letter Grade is: D");
+                    letter_grade = 'D';
+           }
+           else if (average_percentage < 40 && average_percentage >= 0)
+           {
+                    System.out.println("Your Letter Grade is: F");
+                    letter_grade = 'F';
+           }
+           else
+           {
+                    System.out.println("Invalid Grade");
+           }
+    }
+    void edit_grade(int i, double new_grade, int n)
+    {
+           for(int index=i; index <n; index++)
+           {
+                if (index != i) continue;
+                else  
+                {
+                    grade_list[index] = new_grade;
+                }
+           }
+    }
+    void delete_grade(int i, int n)
+    {
+           double[] new_grade_list = new double[n];
+           int j = 0;
+           for (int index=0;index<n;index++)
+           {
+                if (index != i)
+                {
+                     new_grade_list[j] = grade_list[index];
+                     System.out.println(new_grade_list[j]);
+                     j++;
+                }
+           }
+           for(j=0;j<n;j++)
+           {
+               grade_list[j] = new_grade_list[j];
+           }
+    }
+}
+
+class grade_tracker
+{
+      public static void main(String args[])
+      {
+           grade ob;
+           ArrayList<grade> student_list = new ArrayList<grade>();
+           Scanner sc = new Scanner(System.in);
+           int choice = 1, n=0, option=0, i=0, action=1; 
+           double score;
+           while (choice == 1)
+           { 
+                ob = new grade();
+                student_list.add(ob);
+                System.out.print("Enter the number of subjects you have: ");
+                n = sc.nextInt();
+                for (i=0;i<n;i++)
+                {
+                     System.out.print("Enter your grade out of 25 in Subject " + (i+1) + " : ");
+                     score = sc.nextDouble();
+                     if (score > 0 && score < 25)  ob.read_grade(i, score);
+                     else   System.out.println("Invalid Grade");
+                }
+                ob.calculate_averageGrade(n);
+                System.out.println("Your average grade is: " + ob.average);
+                while(action == 1)
+                {
+                     System.out.print("Enter 1 to add grade of a subject\nEnter 2 to edit grade of a subject\nEnter 3 to delete grade of a subject\nElse enter 0\n");
+                     option = sc.nextInt();
+                     if (option == 1)
+                     {
+                        System.out.print("Enter your grade out of 25 for subject " + (n+1) + " : ");
+                        score = sc.nextDouble();
+                        if (score > 0 && score < 25)  
+                        {     ob.read_grade(n,score);
+                              n = n+1;
+                              ob.calculate_averageGrade(n);
+                              System.out.println("Your average grade is: " + ob.average);
+                        }
+                        else System.out.println("Invalid Grade");
+                     }
+                     else if (option == 2)
+                     {
+                        System.out.print("Enter the subject number of the grade that you want to edit: ");
+                        i = sc.nextInt();
+                        System.out.print("Enter the new grade out of 25 for the subject " + i + " : ");
+                        score = sc.nextDouble();
+                        if (score > 0 && score < 25) 
+                        {
+                              ob.edit_grade(i-1, score, n);
+                              ob.calculate_averageGrade(n);
+                              System.out.println("Your average grade is: " + ob.average);
+                        }
+                        else System.out.println("Invalid Grade");
+                    }
+                    else if (option == 3)
+                   {
+                        System.out.print("Enter the subject number of the grade that you want to delete: ");
+                        i = sc.nextInt();
+                        ob.delete_grade(i-1, n);
+                        n = n-1;
+                        ob.calculate_averageGrade(n);
+                        System.out.println("Your average grade is: " + ob.average);
+                   }
+                   else break;
+                   System.out.println("Do you want to continue adding, editing or deleting grades? (Enter 1 for yes and 0 for no");
+                   action = sc.nextInt();
+                }  
+                System.out.println("Do you want to continue adding grades of next student? (Enter 1 for yes and 0 for no");
+                choice = sc.nextInt();
+           }
+      }
+}
