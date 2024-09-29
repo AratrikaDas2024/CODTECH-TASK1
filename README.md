@@ -18,7 +18,7 @@ Average Grade Calculation
 Letter Grade Calculation
 Adding, editing and deleting grades
 
-Technologies Used
+Technologies Used:
 Basic to Intermediate Java Programming Skills
 
 ![Screenshot 2024-09-29 223559](https://github.com/user-attachments/assets/9cd2014d-f92d-47ec-94b0-1a32e1ca669b)
